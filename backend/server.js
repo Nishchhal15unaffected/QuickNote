@@ -15,7 +15,7 @@ app.use("/api/notes", noteRoutes);
 //deployment
 __dirname = path.resolve();
 if (process.env.NODE_ENV === "deployment") {
-  app.use(express.static(path.join(__dirname, "front-end", "build")));
+  app.use(express.static(path.join(__dirname, "/front-end/build")));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "front-end", "build", "index.html"));
   });
