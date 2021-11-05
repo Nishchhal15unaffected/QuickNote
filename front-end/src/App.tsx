@@ -12,8 +12,8 @@ import EditNote from "./screens/EditNote/EditNote";
 import { useState } from "react";
 import Profile from "./screens/Profile/Profile";
 
-function App() {
-  const [search, setSearch] = useState("");
+const App: React.FC = () => {
+  const [search, setSearch] = useState<string>("");
   return (
     <BrowserRouter>
       <div className="App">
@@ -29,12 +29,12 @@ function App() {
           <Route path="/createnote" component={CreateNote} exact />
           <Route path="/editnote/:id" component={EditNote} exact />
           <Route path="/register" component={RegisterScreen} exact />
-          <Route path="/profile" component={Profile} excat />
+          <Route path="/profile" component={Profile} />
         </main>
         <Footer />
       </div>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

@@ -2,6 +2,7 @@
   "recommendations": [
     "xabikos.javascriptsnippets",
     "chris-noring.node-snippets",
-    "dsznajder.es7-react-js-snippets"
+    "dsznajder.es7-react-js-snippets",
+    "infeng.vscode-react-typescript"
   ]
 }

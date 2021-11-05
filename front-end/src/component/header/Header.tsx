@@ -9,11 +9,15 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import { logout } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-const Header = ({ setSearch }) => {
+import { RootState } from "../../store";
+interface Props {
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
+const Header: React.FC<Props> = ({ setSearch }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const userLogin = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userLogin;
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/");

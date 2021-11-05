@@ -8,21 +8,22 @@ import "./LoginScreen.css";
 import { login } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import {RootState} from '../../store'
 function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state:RootState) => state.userLogin);
   const history = useHistory();
-  const { loading, error, userInfo } = userLogin;
+  const { loading, error, userInfo }:any = userLogin;
   useEffect(() => {
     if (userInfo) {
       history.push("/mynotes");
     }
   }, [history, userInfo]);
-  const submitHandler = async (e) => {
+  const submitHandler = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(login({email, password}));
   };
   return (
     <MainScreen title="LOGIN">

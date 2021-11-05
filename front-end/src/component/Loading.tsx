@@ -1,6 +1,7 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
-function Loading(size = 100) {
+
+const Loading: React.FC = () => {
   return (
     <div
       style={{
@@ -13,14 +14,14 @@ function Loading(size = 100) {
     >
       <Spinner
         style={{
-          width: size,
-          height: size,
+          width: 100,
+          height: 100,
         }}
         animation="border"
         variant="danger"
       />
     </div>
   );
-}
+};
 
 export default Loading;

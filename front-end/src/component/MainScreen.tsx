@@ -1,7 +1,11 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 import "./MainScreen.css";
-const MainScreen = ({ title, children }) => {
+interface Props {
+  title: string;
+  children: React.ReactNode;
+}
+const MainScreen: React.FC<Props> = ({ title, children }) => {
   return (
     <div className="mainback">
       <Container>

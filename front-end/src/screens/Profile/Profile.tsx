@@ -7,20 +7,18 @@ import Loading from "../../component/Loading";
 import { updateProfile } from "../../actions/userAction";
 import { useHistory } from "react-router";
 import "./Profile.css";
+import {RootState} from '../../store'
 const Profile = () => {
   const history = useHistory();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [pic, setPic] = useState();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [picMessage, setPicMessage] = useState();
-  const [message, setMessage] = useState();
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-  const userUpdate = useSelector((state) => state.userUpdate);
-  const { loading, error, success } = userUpdate;
+  const userLogin = useSelector((state:RootState) => state.userLogin);
+  const { userInfo }:any = userLogin;
+  const userUpdate = useSelector((state:RootState) => state.userUpdate);
+  const { loading, error, success }:any = userUpdate;
 
   useEffect(() => {
     if (!userInfo) {
@@ -28,14 +26,13 @@ const Profile = () => {
     } else {
       setName(userInfo.name);
       setEmail(userInfo.email);
-      setPic(userInfo.pic);
     }
   }, [history, userInfo]);
 
-  const submitHandler = (e) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(pic);
     dispatch(updateProfile({ name, email, password }));
+    
   };
   return (
     <MainScreen title="Edit Profile">
@@ -86,9 +83,6 @@ const Profile = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 ></Form.Control>
               </Form.Group>{" "}
-              {picMessage && (
-                <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
-              )}
               <Button variant="outline-danger" className="my-3" type="submit">
                 Update
               </Button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import MainScreen from "../../component/MainScreen";
 import { Button, Card, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,16 +6,19 @@ import { createNoteAction } from "../../actions/noteAction";
 import Loading from "../../component/Loading";
 import ErrorMessage from "../../component/ErrorMessage";
 import ReactMarkdown from "react-markdown";
-
-function CreateNote({ history }) {
+import { History } from "history";
+import {RootState}from '../../store'
+interface ChildComponentProps {
+  history: History;
+}
+const CreateNote: React.FC<ChildComponentProps> = ({ history }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
 
   const dispatch = useDispatch();
-
-  const noteCreate = useSelector((state) => state.noteCreate);
-  const { loading, error, note } = noteCreate;
+  const noteCreate = useSelector((state:RootState) => state.noteCreate);
+  const { loading, error }: any = noteCreate;
 
   const resetHandler = () => {
     setTitle("");
@@ -23,10 +26,10 @@ function CreateNote({ history }) {
     setContent("");
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!title || !content || !category) return;
-    dispatch(createNoteAction(title, content, category));
+    dispatch(createNoteAction({title, content, category}));
 
     resetHandler();
     history.push("/mynotes");
@@ -77,7 +80,7 @@ function CreateNote({ history }) {
                 onChange={(e) => setCategory(e.target.value)}
               />
             </Form.Group>
-            {loading && <Loading size={50} />}
+            {loading && <Loading />}
             <Button type="submit" variant="outline-danger" className="my-3">
               Create Note
             </Button>
@@ -97,6 +100,6 @@ function CreateNote({ history }) {
       </Card>
     </MainScreen>
   );
-}
+};
 
 export default CreateNote;

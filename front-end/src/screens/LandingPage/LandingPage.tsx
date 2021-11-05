@@ -1,7 +1,12 @@
 import "./LandingPage.css";
 import { Container, Row, Button } from "react-bootstrap";
 import { useEffect } from "react";
-const LandingPage = ({ history }) => {
+import { History } from "history";
+
+interface ChildComponentProps {
+  history: History;
+}
+const LandingPage: React.FC<ChildComponentProps> = ({ history }) => {
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {

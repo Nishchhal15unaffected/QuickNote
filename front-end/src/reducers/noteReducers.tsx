@@ -12,8 +12,13 @@ import {
   NOTES_UPDATE_SUCCESS,
   NOTES_UPDATE_FAIL,
 } from "../constants/noteConstants";
-
-export const noteListReducer = (state = { notes: [] }, action) => {
+import {
+  noteAction,
+  createAction,
+  deleteAction,
+  updateAction,
+} from "../Type/Type";
+export const noteListReducer = (state = { notes: [] }, action: noteAction) => {
   switch (action.type) {
     case NOTES_LIST_REQUEST:
       return { loading: true };
@@ -26,7 +31,7 @@ export const noteListReducer = (state = { notes: [] }, action) => {
   }
 };
 
-export const noteCreateReducer = (state = {}, action) => {
+export const noteCreateReducer = (state = {}, action: createAction) => {
   switch (action.type) {
     case NOTES_CREATE_REQUEST:
       return { loading: true };
@@ -40,7 +45,7 @@ export const noteCreateReducer = (state = {}, action) => {
   }
 };
 
-export const noteDeleteReducer = (state = {}, action) => {
+export const noteDeleteReducer = (state = {}, action: deleteAction) => {
   switch (action.type) {
     case NOTES_DELETE_REQUEST:
       return { loading: true };
@@ -54,7 +59,7 @@ export const noteDeleteReducer = (state = {}, action) => {
   }
 };
 
-export const noteUpdateReducer = (state = {}, action) => {
+export const noteUpdateReducer = (state = {}, action: updateAction) => {
   switch (action.type) {
     case NOTES_UPDATE_REQUEST:
       return { loading: true };

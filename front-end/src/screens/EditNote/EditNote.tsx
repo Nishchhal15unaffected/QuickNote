@@ -1,46 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import MainScreen from "../../component/MainScreen";
-import axios from "axios";
 import { Button, Card, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteNoteAction, updateNoteAction } from "../../actions/noteAction";
 import ErrorMessage from "../../component/ErrorMessage";
 import Loading from "../../component/Loading";
 import ReactMarkdown from "react-markdown";
-
-function SingleNote({ match, history }) {
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
-  const [category, setCategory] = useState();
-  const [date, setDate] = useState("");
-
+import {RootState} from '../../store'
+import { RouteComponentProps,useHistory } from 'react-router';
+interface MatchParams {
+  id: string;
+}
+interface Props extends RouteComponentProps<MatchParams> {
+}
+const SingleNote: React.FC<Props> = ({ match}) => {
+  const [title, setTitle] = useState<string>();
+  const [content, setContent] = useState<string>();
+  const [category, setCategory] = useState<string | undefined>();
+  const history= useHistory()
   const dispatch = useDispatch();
 
-  const noteUpdate = useSelector((state) => state.noteUpdate);
-  const { loading, error } = noteUpdate;
+  const noteUpdate = useSelector((state:RootState) => state.noteUpdate);
+  const { loading, error }:any = noteUpdate;
 
-  const noteDelete = useSelector((state) => state.noteDelete);
-  const { loading: loadingDelete, error: errorDelete } = noteDelete;
+  const noteDelete = useSelector((state:RootState) => state.noteDelete);
+  const { loading: loadingDelete, error: errorDelete }:any = noteDelete;
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (id: string ) => {
     if (window.confirm("Are you sure?")) {
       dispatch(deleteNoteAction(id));
     }
     history.push("/mynotes");
   };
 
-  useEffect(() => {
-    const fetching = async () => {
-      const { data } = await axios.get(`/api/notes/${match.params.id}`);
-
-      setTitle(data.title);
-      setContent(data.content);
-      setCategory(data.category);
-      setDate(data.updatedAt);
-    };
-
-    fetching();
-  }, [match.params.id, date]);
 
   const resetHandler = () => {
     setTitle("");
@@ -48,10 +40,11 @@ function SingleNote({ match, history }) {
     setContent("");
   };
 
-  const updateHandler = (e) => {
+  const updateHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!title || !content || !category) return;
-    dispatch(updateNoteAction(match.params.id, title, content, category));
+    const id=match.params.id;
+    dispatch(updateNoteAction({id, title, content, category}));
 
     resetHandler();
     history.push("/mynotes");
@@ -106,7 +99,7 @@ function SingleNote({ match, history }) {
                 onChange={(e) => setCategory(e.target.value)}
               />
             </Form.Group>
-            {loading && <Loading size={50} />}
+            {loading && <Loading />}
             <Button variant="outline-danger" className="my-3" type="submit">
               Update Note
             </Button>
@@ -122,6 +115,6 @@ function SingleNote({ match, history }) {
       </Card>
     </MainScreen>
   );
-}
+};
 
 export default SingleNote;
